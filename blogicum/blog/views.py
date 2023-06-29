@@ -45,6 +45,8 @@ posts = [
     },
 ]
 
+post_ids = [post['id'] for post in posts]
+
 
 def index(request):
     template = 'blog/index.html'
@@ -53,10 +55,10 @@ def index(request):
 
 
 def post_detail(request, id):
-    if id not in [post['id'] for post in posts]:
-        raise Http404("Такой страницы нет.")
+    if id not in post_ids:
+        raise Http404('Такой страницы нет.')
     template = 'blog/detail.html'
-    context = {'post': posts[id]}
+    context = {'post': posts[post_ids.index(id)]}
     return render(request, template, context)
 
 
