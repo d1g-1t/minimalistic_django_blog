@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 
-
+# Список постов
 posts = [
     {
         'id': 0,
@@ -45,24 +45,25 @@ posts = [
     },
 ]
 
+# Список идентификаторов постов
 post_ids = [post['id'] for post in posts]
 
 
 def index(request):
     template = 'blog/index.html'
-    context = {'posts': reversed(posts)}
+    context = {'posts': reversed(posts)}  # Передаем список постов в обратном порядке
     return render(request, template, context)
 
 
 def post_detail(request, id):
     if id not in post_ids:
-        raise Http404('Такой страницы нет.')
+        raise Http404('Такой страницы нет.')  # Возбуждаем исключение, если пост с указанным идентификатором не найден
     template = 'blog/detail.html'
-    context = {'post': posts[post_ids.index(id)]}
+    context = {'post': posts[post_ids.index(id)]}  # Получаем пост по его идентификатору
     return render(request, template, context)
 
 
 def category_posts(request, category_slug):
     template = 'blog/category.html'
-    context = {'category': category_slug}
+    context = {'category': category_slug}  # Передаем категорию в контексте
     return render(request, template, context)
